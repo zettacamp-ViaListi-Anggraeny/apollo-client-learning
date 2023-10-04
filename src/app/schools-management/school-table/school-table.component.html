@@ -1,1 +1,43 @@
-<p>school-table works!</p>
+<div class="grid">
+  <h1>School Management</h1>
+
+  <div *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="schools" class="p-col-12" *ngIf="!loading">
+    <ng-container matColumnDef="shortName">
+      <th mat-header-cell *matHeaderCellDef>Short Name</th>
+      <td mat-cell *matCellDef="let data">{{ data?.short_name | uppercase }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="longName">
+      <th mat-header-cell *matHeaderCellDef>Long Name</th>
+      <td mat-cell *matCellDef="let data">{{ data?.long_name | titlecase }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let data">{{ data?.status | titlecase }}</td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="['shortName', 'longName', 'status']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['shortName', 'longName', 'status']"
+    ></tr>
+  </table>
+
+  <!-- Pagination -->
+  <div class="button-container">
+    <button *ngIf="paginator?.page > 0" mat-raised-button (click)="prevPage()">
+      Previous
+    </button>
+    <button *ngIf="((paginator?.page+1)*paginator?.limit) < maxCount" mat-raised-button (click)="nextPage()">
+      Next
+    </button>
+  </div>
+</div>

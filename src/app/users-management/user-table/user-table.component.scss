@@ -1,0 +1,57 @@
+.badge {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: 16px;
+  color: white;
+}
+
+.badge-status {
+  display: inline;
+  padding: 5px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  color: white;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.red {
+  background-color: #ef4444;
+}
+.orange {
+  background-color: #f97316;
+}
+.green {
+  background-color: #22c55e;
+}
+.blue {
+  background-color: #3b82f6;
+}
+.purple {
+  background-color: #a855f7;
+}
+
+.card {
+  width: 330px;
+  margin-bottom: 20px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+@media screen and (max-width: 768px) {
+  .card-container {
+    display: grid;
+    grid-template-columns: auto;
+  }
+}

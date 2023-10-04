@@ -1,1 +1,83 @@
-<p>user-table works!</p>
+<h1>Users Management</h1>
+
+<div style="display: flex; gap: 10px; align-items: center;">
+  <mat-form-field>
+    <input
+      matInput
+      [(ngModel)]="searchTerm"
+      placeholder="Search User"
+      (ngModelChange)="onSearchChange()"
+    />
+  </mat-form-field>
+  <button
+    mat-flat-button
+    (click)="searchUser()"
+    [disabled]="isLoading || searchTerm.length < 4"
+    color="primary"
+  >
+    Search
+  </button>
+</div>
+
+<div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div *ngIf="userData" class="card-container">
+    <div *ngFor="let data of userData; let i = index">
+      <mat-card class="card">
+        <div class="flex">
+          <div>
+            <img
+              mat-card-image
+              [src]="data.profile_picture"
+              alt="user profile"
+              *ngIf="data.profile_picture !== ''"
+              style="width: 40px; height: 40px; object-fit: cover"
+            />
+            <div *ngIf="data.profile_picture === ''">
+              <p [ngClass]="generateClass(i)" class="badge">
+                <span>{{ data.first_name | slice : 0 : 2 }}</span>
+              </p>
+            </div>
+          </div>
+          <h3 style="font-weight: 500">
+            {{ data.civility }} {{ data.last_name | titlecase }}
+            {{ data.first_name }}
+          </h3>
+        </div>
+
+        <mat-card-content>
+          <p>Position : {{ data.position }}</p>
+          <p>Email : {{ data.email }}</p>
+          <p>entity : {{ data.entities[0].entity_name }}</p>
+          <span
+            >School :
+            <p>{{ data.entities[0].school.short_name }}</p>
+          </span>
+        </mat-card-content>
+
+        <p
+          class="badge-status"
+          [ngClass]="data.status === 'active' ? 'green' : 'red'"
+        >
+          <strong>Status : </strong>
+          {{ data.status | titlecase }}
+        </p>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="userData && userData.length === 0">
+    <p style="text-align: center; font-size: 24px; margin-top: 20px">
+      Data not found!
+    </p>
+  </div>
+
+  <mat-paginator
+    [length]="userData.length"
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+  
+</div>

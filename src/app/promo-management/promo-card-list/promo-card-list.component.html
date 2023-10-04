@@ -1,1 +1,27 @@
-<p>promo-card-list works!</p>
+<h1>Promo Management</h1>
+
+<div *ngFor="let data of promo">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title [innerHTML]="data.title"></mat-card-title>
+      <mat-card-subtitle [innerHTML]="data.sub_title"></mat-card-subtitle>
+    </mat-card-header>
+    <ng-container *ngIf="data.image_url == ''; else defaultImage">
+      <img mat-card-image [src]="data.image_url" alt="Promo Photo" />
+    </ng-container>
+    <ng-template #defaultImage>
+      <img
+        mat-card-image
+        src="https://placehold.co/200x100?text=Promo+Image"
+        alt="Default Photo"
+      />
+    </ng-template>
+
+    <mat-card-content>
+      <p style="background-color: gray; padding: 0px 20px; display: inline; border-radius: 30px;">
+        {{ data.ref }}
+      </p>
+      <p [innerHTML]="data.description"></p>
+    </mat-card-content>
+  </mat-card>
+</div>

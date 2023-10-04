@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PromoService {
+  constructor(private apollo: Apollo) {}
 
-  constructor(private apollo: Apollo) { }
-
-  getAllPromo() {
-
+  getAllPromo(): Observable<any> {
+    return this.apollo.query({
+      query: gql`
+        query {
+          GetAllPromos(pagination: { limit: 10, page: 0 }) {
+            _id
+            ref
+            image_url
+            title
+            sub_title
+            description
+          }
+        }
+      `,
+    });
   }
 
-  createPromo(payload: any){
-
-  }
+  createPromo(payload: any) {}
 }

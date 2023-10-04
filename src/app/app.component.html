@@ -1,20 +1,59 @@
-<div class="p-grid">
-  <div class="p-col-12">
-    <a [routerLink]="['/home']">Home</a>
-  </div>
-  <div class="p-col-12">
-    <a [routerLink]="['/title']">Title Management</a>
-  </div>
-  <div class="p-col-12">
-    <a [routerLink]="['/schools']">School Management</a>
-  </div>
-  <div class="p-col-12">
-    <a [routerLink]="['/users']">User Management</a>
-  </div>
-  <div class="p-col-12">
-    <a [routerLink]="['/promo']">Promo</a>
-  </div>
-</div>
-<br>
-
-<router-outlet></router-outlet>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    class="mat-sidenav"
+    [opened]="!isHandset"
+    [mode]="isHandset ? 'over' : 'side'"
+  >
+    <mat-nav-list>
+      <a mat-list-item style="width: 100%">
+        
+        <span style="font-weight: 500; font-size: 20px; padding-left: 10px"
+          >Management</span
+        >
+      </a>
+      <a mat-list-item [routerLink]="['/home']" routerLinkActive="activeLink"
+        ><mat-icon>home</mat-icon> Home</a
+      >
+      <a mat-list-item [routerLink]="['/title']" routerLinkActive="activeLink"
+        ><mat-icon> title</mat-icon> Title Management</a
+      >
+      <a mat-list-item [routerLink]="['/schools']" routerLinkActive="activeLink"
+        ><mat-icon>school</mat-icon> School Management</a
+      >
+      <a mat-list-item [routerLink]="['/users']" routerLinkActive="activeLink"
+        ><mat-icon>supervisor_account</mat-icon> User Management</a
+      >
+      <a mat-list-item [routerLink]="['/promo']" routerLinkActive="activeLink"
+        ><mat-icon>card_giftcard</mat-icon> Promo</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <header style="background-color: #1c1d20">
+      <div>
+        <button
+          mat-button
+          style="color: white; background-color: #1c1d20"
+          (click)="toggleSidenav()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1
+          style="
+            margin: 0;
+            padding-left: 10px;
+            font-weight: 500;
+            font-size: 22px;
+            color: white;
+          "
+        >
+          {{ pageTitle }}
+        </h1>
+      </div>
+    </header>
+    <main style="padding: 40px 50px">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
