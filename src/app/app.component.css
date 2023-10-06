@@ -1,53 +1,5 @@
-/* Add your custom styling here */
-.sidenav-container {
-  height: 100%;
-}
-
-.mat-sidenav {
-  width: 250px;
-  background-color: #1c1d20;
-}
-
-.mat-sidenav-content {
-  padding: 16px;
-}
-
-.sidenav-container a {
-  color: white !important;
-}
-
-.activeLink {
-  background-color: rgba(110, 110, 110, 0.341);
-  border-radius: 5px;
-}
-
-mat-list-item .activeLink {
-  width: 200px;
-}
-
-.mat-list-item mat-icon{
-    margin: 0 10px;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  gap: 20px;
-  justify-content: space-between;
-}
-
-header div {
-  display: flex;
-  align-items: center;
-}
-
-mat-sidenav-content {
-  padding: 0 !important;
-}
-
-@media screen and (max-width: 768px) {
-  mat-sidenav {
-    width: 100%;
-  }
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
 }

@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{ detailData?.title }}</h1>
+<p>{{ detailData?.sub_title }}</p>
+
+<mat-dialog-content>
+  <ng-container *ngIf="detailData?.image_url !== ''; else defaultImage">
+    <img
+      mat-card-image
+      [src]="detailData?.image_url"
+      alt="Promo Photo"
+      (error)="onImageError($event)"
+      style="height: 300px; object-fit: cover; border-radius: 10px"
+    />
+  </ng-container>
+  <ng-template #defaultImage>
+    <img
+      mat-card-image
+      src="https://placehold.co/200x100?text=Promo+Image"
+      alt="Default Photo"
+      style="height: 200px; object-fit: cover"
+    />
+  </ng-template>
+
+  <!-- <img style="width: 350px;  object-fit: cover;" [src]="detailData.image_url" alt="" /> -->
+  <p>
+    {{'ref' | translate}} : <strong>{{ detailData?.ref }}</strong>
+  </p>
+  <p>{{ detailData?.description }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{'cancel' | translate}}</button>
+</mat-dialog-actions>

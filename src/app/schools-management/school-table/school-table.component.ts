@@ -1,53 +1,51 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SchoolService } from '../school.service';
 import { SubSink } from 'subsink';
+import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-school-table',
   templateUrl: './school-table.component.html',
   styleUrls: ['./school-table.component.scss'],
 })
-export class SchoolTableComponent implements OnInit, OnDestroy {
+export class SchoolTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private subs = new SubSink();
-  schools: any;
-  loading: boolean = false;
-  paginator: any = {
-    limit: 100,
-    page: 0,
-  };
-  maxCount: number = 0;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]); // Specify the data type as 'any[]'
+  isLoading: boolean = false;
 
-  constructor(private schoolService: SchoolService) {}
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
+
+  constructor(private schoolService: SchoolService, private router: Router) {}
 
   ngOnInit(): void {
     this.getSchoolsData();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   getSchoolsData() {
-    this.loading = true;
-    this.subs.sink = this.schoolService
-      .getAllSchool(this.paginator)
-      .subscribe((resp) => {
-        this.formatSchoolsData(resp);
-        this.loading = false;
-        console.log(resp);
-      });
+    this.isLoading = true;
+    
+    this.subs.sink = this.schoolService.schoolsList$.subscribe((data) => {
+      console.log(data);
+      this.dataSource.data = data; // Assign data to the dataSource
+      this.isLoading = false;
+    });
   }
 
-  formatSchoolsData(data: any) {
-    this.schools = data?.data?.GetAllSchools;
-    this.maxCount = this.schools[0]?.count_document;
-    console.log(this.schools);
+  onAddNewSchools() {
+    this.router.navigate(['schools/form']);
   }
 
-  prevPage() {
-    this.paginator.page--;
-    this.getSchoolsData();
-  }
-
-  nextPage() {
-    this.paginator.page++;
-    this.getSchoolsData();
+  onDelete(index: number) {
+    if (index >= 0 && index < this.dataSource.data.length) {
+      const deletedSchool = this.dataSource.data[index];
+      this.schoolService.deleteSchoolsData(deletedSchool.id);
+    }
   }
 
   ngOnDestroy(): void {

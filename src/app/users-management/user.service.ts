@@ -37,7 +37,7 @@ export class UserService {
         lastName: lastName,
         limit: limit,
         page: page,
-      },
+      }, fetchPolicy:'network-only'
     });
   }
 }

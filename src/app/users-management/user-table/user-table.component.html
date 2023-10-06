@@ -1,6 +1,6 @@
 <h1>Users Management</h1>
 
-<div style="display: flex; gap: 10px; align-items: center;">
+<div style="display: flex; gap: 10px; align-items: center" *ngIf="isValid">
   <mat-form-field>
     <input
       matInput
@@ -20,7 +20,9 @@
 </div>
 
 <div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div class="center-spinner" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
 
   <div *ngIf="userData" class="card-container">
     <div *ngFor="let data of userData; let i = index">
@@ -49,10 +51,10 @@
         <mat-card-content>
           <p>Position : {{ data.position }}</p>
           <p>Email : {{ data.email }}</p>
-          <p>entity : {{ data.entities[0].entity_name }}</p>
+          <p>entity : {{ data.entities[0]?.entity_name }}</p>
           <span
             >School :
-            <p>{{ data.entities[0].school.short_name }}</p>
+            <p>{{ data.entities[0]?.school?.short_name }}</p>
           </span>
         </mat-card-content>
 
@@ -71,13 +73,12 @@
       Data not found!
     </p>
   </div>
+</div>
 
-  <mat-paginator
-    [length]="userData.length"
-    [pageSize]="5"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    showFirstLastButtons
-  >
-  </mat-paginator>
-  
+<div *ngIf="!isValid" class="error-container">
+  <div style="position: absolute; z-index: 10; width:90%; margin-top:100px">
+    <h1>{{ errorMessage | uppercase}}</h1>
+    <p>Please Wait...</p>
+  </div>
+  <embed src="../../../assets/Error.svg" type="" style="height: 90%;" />
 </div>

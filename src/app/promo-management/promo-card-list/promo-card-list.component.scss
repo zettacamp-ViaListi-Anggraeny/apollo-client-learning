@@ -1,3 +1,96 @@
-.card{
-    width: 400px;
+.card {
+  width: 340px;
+  margin-bottom: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.red {
+  color: #991b1b;
+  background-color: #fecaca;
+}
+
+.orange {
+  color: #9a3412;
+  background-color: #fdba74;
+}
+
+.green {
+  color: #166534;
+  background-color: #86efac;
+}
+
+.blue {
+  color: #1e40af;
+  background-color: #93c5fd;
+}
+
+.purple {
+  color: #6b21a8;
+  background-color: #d8b4fe;
+}
+
+.center-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+::ng-deep .mat-dialog-container {
+  width: 60vw !important;
+  height: 70vh !important;
+  border-radius: 20px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+
+  
+}
+
+.btn-details {
+  // color: white;
+  border: 1px solid;
+}
+
+.btn-details:hover {
+  // color: white;
+  border: 1px solid;
+  background-color: #fb8c00;
+  color: white;
+}
+
+.btn-rounded {
+  padding: 5px;
+  border-radius: 100%;
+  border: none;
+}
+
+@media screen and (max-width: 915px) {
+  .grid-3 {
+    display: grid;
+    grid-template-columns: auto;
+  }
+
+  .card {
+    width: 90%;
+  }
+
+  ::ng-deep .mat-dialog-container {
+    width: 100vw !important;
+    height: 70vh !important;
+    border-radius: 20px;
+  }
 }

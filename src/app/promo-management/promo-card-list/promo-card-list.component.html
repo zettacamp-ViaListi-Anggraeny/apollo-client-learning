@@ -1,27 +1,120 @@
-<h1>Promo Management</h1>
+<div
+  style="
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+  "
+>
+  <h1 class="title">{{ "promoM" | translate }}</h1>
 
-<div *ngFor="let data of promo">
-  <mat-card class="card">
-    <mat-card-header>
-      <mat-card-title [innerHTML]="data.title"></mat-card-title>
-      <mat-card-subtitle [innerHTML]="data.sub_title"></mat-card-subtitle>
-    </mat-card-header>
-    <ng-container *ngIf="data.image_url == ''; else defaultImage">
-      <img mat-card-image [src]="data.image_url" alt="Promo Photo" />
-    </ng-container>
-    <ng-template #defaultImage>
-      <img
-        mat-card-image
-        src="https://placehold.co/200x100?text=Promo+Image"
-        alt="Default Photo"
-      />
-    </ng-template>
+  <button
+    color="primary"
+    mat-flat-button
+    (click)="onAddPromo()"
+    style="color: white; width: 180px"
+  >
+    <mat-icon>add_circle_outline</mat-icon>
+    <span> {{ "addPromo" | translate }} </span>
+  </button>
+</div>
 
-    <mat-card-content>
-      <p style="background-color: gray; padding: 0px 20px; display: inline; border-radius: 30px;">
-        {{ data.ref }}
-      </p>
-      <p [innerHTML]="data.description"></p>
-    </mat-card-content>
-  </mat-card>
+<div style="margin: 50px 0">
+  <div class="center-spinner" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading" class="grid-3">
+    <div *ngFor="let data of promo; let i = index">
+      <mat-card class="card">
+        <mat-card-header
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <mat-card-title [innerHTML]="data?.title"></mat-card-title>
+          <mat-card-subtitle
+            class="line-clamp"
+            [innerHTML]="data?.sub_title"
+          ></mat-card-subtitle>
+          <mat-card-content>
+            <p
+              [ngClass]="generateClass(i)"
+              class="line-clamp"
+              style="padding: 4px 10px; border-radius: 30px"
+            >
+              {{ data?.ref }}
+            </p>
+          </mat-card-content>
+        </mat-card-header>
+        <ng-container *ngIf="data?.image_url !== ''; else defaultImage">
+          <img
+            mat-card-image
+            [src]="data?.image_url"
+            alt="Promo Photo"
+            (error)="onImageError($event)"
+            style="height: 200px; object-fit: cover"
+          />
+        </ng-container>
+        <ng-template #defaultImage>
+          <img
+            mat-card-image
+            src="https://placehold.co/200x100?text=Promo+Image"
+            alt="Default Photo"
+            style="height: 200px; object-fit: cover"
+          />
+        </ng-template>
+
+        <mat-card-actions
+          style="display: flex; gap: 10px; justify-content: space-between"
+        >
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="openDialog(data._id)"
+            class="btn-details"
+          >
+            {{ "seeDetail" | translate }}
+          </button>
+          <div style="display: flex; gap: 10px">
+            <button
+              class="btn-rounded"
+              style="background-color: #212121; color: white"
+              (click)="onEdit(data._id)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              class="btn-rounded"
+              style="background-color: #e53935; color: white"
+              (click)="onDelete(data._id)"
+            >
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: end">
+  <button
+    *ngIf="paginator?.page > 0"
+    mat-raised-button
+    color="primary"
+    (click)="prevPage()"
+  >
+    {{ "prev" | translate }}
+  </button>
+  <button
+    *ngIf="(paginator?.page + 1) * paginator?.limit < maxCount"
+    mat-raised-button
+    color="primary"
+    (click)="nextPage()"
+  >
+    {{ "next" | translate }}
+  </button>
 </div>

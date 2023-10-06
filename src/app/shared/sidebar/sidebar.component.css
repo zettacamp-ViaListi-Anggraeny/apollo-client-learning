@@ -1,0 +1,50 @@
+/* Add your custom styling here */
+.sidenav-container {
+  height: 100%;
+}
+
+.mat-sidenav {
+  width: 250px;
+  background-color: #1c1d20;
+  
+}
+
+.mat-sidenav-content {
+  padding: 16px;
+}
+
+.sidenav-container a {
+  color: white !important;
+}
+
+.activeLink {
+  background-color: rgba(110, 110, 110, 0.341);
+  border-radius: 5px;
+}
+
+mat-list-item .activeLink {
+  width: 200px;
+}
+
+.mat-list-item mat-icon {
+  margin: 0 10px;
+}
+
+mat-sidenav-content {
+  padding: 0 !important;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 22px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  color: #ff7e3e;
+}
+
+@media screen and (max-width: 915px) {
+  mat-sidenav {
+    width: 100%;
+  }
+}

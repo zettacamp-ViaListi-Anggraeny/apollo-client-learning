@@ -1,0 +1,263 @@
+<form action="" [formGroup]="schoolsForm">
+  <h1>{{ "schools" | translate }}</h1>
+  <p>
+    {{ "schoolsSub" | translate }}
+  </p>
+
+  <div class="grid">
+    <!-- Long Name -->
+    <mat-form-field class="form-input">
+      <mat-label>{{ "longName" | translate }}</mat-label>
+      <input
+        type="text"
+        id="longName"
+        formControlName="longName"
+        matInput
+        required
+      />
+    </mat-form-field>
+    <!-- Short Name -->
+    <mat-form-field class="form-input">
+      <mat-label>{{ "shortName" | translate }}</mat-label>
+      <input
+        type="text"
+        id="shortName"
+        formControlName="shortName"
+        matInput
+        required
+      />
+    </mat-form-field>
+  </div>
+
+  <!-- Phone Number -->
+  <mat-form-field class="form-input">
+    <mat-label>{{ "phone" | translate }}</mat-label>
+    <input type="text" id="phone" formControlName="phone" matInput required />
+  </mat-form-field>
+
+  <!-- Website -->
+  <mat-form-field class="form-input">
+    <mat-label>{{ "website" | translate }}</mat-label>
+    <input
+      type="text"
+      id="website"
+      formControlName="website"
+      matInput
+      placeholder="https://"
+    />
+  </mat-form-field>
+
+  <!-- Email -->
+  <mat-form-field class="form-input">
+    <mat-label>{{ "email" | translate }}</mat-label>
+    <input type="text" id="email" formControlName="email" matInput required />
+  </mat-form-field>
+
+  <!-- Contact Person -->
+  <div class="address-Head flex">
+    <div>
+      <h2 class="text-xl font-semibold max-sm:text-base">
+        {{ "contacts" | translate }}
+      </h2>
+      <p class="text-sm text-slate-500 mt-2 max-sm:hidden">
+        {{ "contactsSub" | translate }}
+      </p>
+    </div>
+    <button
+      mat-flat-button
+      color="accent"
+      style="color: white; display: flex; gap: 10px"
+      (click)="onAddContactPerson()"
+    >
+      <mat-icon>add</mat-icon>
+      <span class="max-sm:hidden">{{ "addContact" | translate }}</span>
+    </button>
+  </div>
+
+  <div formArrayName="contactPerson">
+    <div
+      class="border-b-2 pb-5 mt-3"
+      *ngFor="
+        let contactPersonControl of contactPersonControls.controls;
+        let i = index
+      "
+      [formGroupName]="i"
+    >
+      <!-- Header Field -->
+      <div class="flex">
+        <p class="font-semibold text-slate-600">
+          {{ "contacts" | translate }} - {{ i + 1 }}
+        </p>
+        <button mat-flat-button color="warn" (click)="onDeleteContactPerson(i)">
+          {{ "delete" | translate }}
+        </button>
+      </div>
+
+      <div class="grid">
+        <span class="grid">
+          <!-- First Name -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "firstName" | translate }}</mat-label>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </span>
+
+        <span class="grid">
+          <!-- Last Name -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "lastName" | translate }}</mat-label>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </span>
+
+        <span class="grid">
+          <!-- Phone -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "phone" | translate }}</mat-label>
+            <input
+              type="text"
+              id="phone"
+              formControlName="phone"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </span>
+
+        <span class="grid">
+          <!-- Email -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "email" | translate }}</mat-label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </span>
+
+        <span class="grid">
+          <!-- Position -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "position" | translate }}</mat-label>
+            <input
+              type="text"
+              id="position"
+              formControlName="position"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Address -->
+  <div class="address-Head flex">
+    <div>
+      <h2 class="">{{ "address" | translate }}</h2>
+      <p class="t">{{ "addressSub" | translate }}</p>
+    </div>
+    <button
+      mat-flat-button
+      color="accent"
+      style="color: white; display: flex; gap: 10px"
+      (click)="onAddAddress()"
+    >
+      <mat-icon>add</mat-icon>
+      <span class="max-sm:hidden">{{ "addAddress" | translate }}</span>
+    </button>
+  </div>
+
+  <div formArrayName="address">
+    <div
+      class="border-b-2 pb-5 mt-3"
+      *ngFor="let addressControl of addressControls.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="flex justify-between items-center">
+        <p class="font-semibold text-slate-600">Address - {{ i + 1 }}</p>
+        <button mat-flat-button color="warn" (click)="onDeleteAddress(i)">
+          {{ "delete" | translate }}
+        </button>
+      </div>
+      <div class="grid md:grid-flow-col md:gap-x-5">
+        <div class="grid">
+          <!-- Full Address -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "fullAddress" | translate }}</mat-label>
+            <input
+              type="text"
+              id="fulladdress"
+              formControlName="fullAddress"
+              matInput
+              placeholder="University Address"
+            />
+          </mat-form-field>
+          <!-- Zip Codes -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "zipCodes" | translate }}</mat-label>
+            <input
+              type="number"
+              id="zipCode"
+              formControlName="zipCode"
+              matInput
+              placeholder="University ZipCode"
+            />
+          </mat-form-field>
+        </div>
+        <div class="grid">
+          <!-- City -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "city" | translate }}</mat-label>
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              matInput
+              placeholder="University City"
+            />
+          </mat-form-field>
+          <!-- Country -->
+          <mat-form-field class="form-input">
+            <mat-label>{{ "country" | translate }}</mat-label>
+            <input
+              type="text"
+              id="country"
+              formControlName="country"
+              matInput
+              placeholder="University Country"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Button Submit and Reset -->
+  <div
+    style="display: flex; align-items: center; justify-content: end; gap: 10px"
+  >
+    <button (click)="onReset()" mat-stroked-button color="warn">
+      {{ "cancel" | translate }}
+    </button>
+    <button mat-flat-button color="primary" (click)="onSubmit()" style="color: white;">
+      {{ "submit" | translate }}
+    </button>
+  </div>
+</form>

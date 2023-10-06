@@ -1,1 +1,57 @@
-<p>add-promo-form works!</p>
+<h1 *ngIf="!isEditing">{{ "addPromo" | translate }}</h1>
+<h1 *ngIf="isEditing">{{ "editPromo" | translate }}</h1>
+
+<form [formGroup]="form" style="display: grid">
+  <mat-form-field>
+    <mat-label>{{ "ref" | translate }}</mat-label>
+    <input matInput type="text" formControlName="ref" required />
+    <mat-error *ngIf="form.get('ref')?.hasError('required')">
+      {{ "ref" | translate }} <strong>{{ "required" | translate }}</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ "title" | translate }}</mat-label>
+    <input matInput type="text" formControlName="title" required />
+    <mat-error *ngIf="form.get('title')?.hasError('required')">
+      {{ "title" | translate }} <strong>{{ "required" | translate }}</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ "subTitle" | translate }}</mat-label>
+    <input matInput type="text" formControlName="sub_title" required />
+    <mat-error *ngIf="form.get('sub_title')?.hasError('required')">
+      {{ "subTitle" | translate }} <strong>{{ "required" | translate }}</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ "description" | translate }}</mat-label>
+    <textarea matInput type="text" formControlName="description" required></textarea>
+    <mat-error *ngIf="form.get('description')?.hasError('required')">
+      {{ "description" | translate }} <strong>{{ "required" | translate }}</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ "imageUrl" | translate }}</mat-label>
+    <input matInput type="text" formControlName="image_url" />
+  </mat-form-field>
+</form>
+
+<div mat-dialog-actions style="display: flex; justify-content: flex-end">
+  <button mat-stroked-button color="warn" (click)="cancel()">
+    {{ "cancel" | translate }}
+  </button>
+  <button
+    class="btnSubmit"
+    mat-flat-button
+    color="primary"
+    (click)="savePromo()"
+    cdkFocusInitial
+    style="color: white"
+  >
+    {{ isEditing ? ('save' | translate) : ('submit' | translate) }}
+  </button>
+</div>

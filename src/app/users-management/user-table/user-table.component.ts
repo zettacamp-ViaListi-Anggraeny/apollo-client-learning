@@ -11,6 +11,8 @@ export class UserTableComponent {
   searchTerm: string = '';
   isLoading: boolean = false;
   userData: any = null;
+  isValid: boolean = true;
+  errorMessage: string = '';
 
   constructor(private userService: UserService) {}
 
@@ -22,18 +24,21 @@ export class UserTableComponent {
     const sanitizedSearchTerm = this.searchTerm.trim();
 
     if (sanitizedSearchTerm.length >= 4) {
-      if (this.userData) {
+      if (this.userData!) {
         console.log('Data sudah ada');
       } else {
         this.isLoading = true;
         this.userService.getAllUsers(sanitizedSearchTerm, 10, 0).subscribe(
           (response) => {
-            this.userData = response.data.GetAllUsers;
+            this.userData = response?.data?.GetAllUsers;
             this.isLoading = false;
-            console.log(response.data.GetAllUsers);
+            console.log(response?.data?.GetAllUsers);
           },
           (error) => {
             console.error('API Error:', error);
+            Swal.fire('Error', error.message, 'error');
+            this.errorMessage = `Error: ${error.message}! Please Wait ...`
+            this.isValid = false;
             this.isLoading = false;
           }
         );
